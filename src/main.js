@@ -11,9 +11,16 @@ import {postRequest} from "./utils/api";
 import {putRequest} from "./utils/api";
 import {deleteRequest} from "./utils/api";
 import {initMenu} from './utils/util'
+import iconPicker from 'vue-fontawesome-elementui-icon-picker';
+import ElSelectTree from 'el-select-tree';
+import wl from "wl-vue-select";
+import "wl-vue-select/lib/wl-vue-select.css"
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(iconPicker);
+Vue.use(ElSelectTree);
+Vue.use(wl);
 Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.putRequest = putRequest;
@@ -24,12 +31,10 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/') {
     next();
   } else {
-    console.log('user', window.localStorage.getItem("user"))
     if (window.localStorage.getItem("user")) {
       initMenu(router, store);
       next();
     } else {
-      console.log('login')
       next('/');
     }
   }

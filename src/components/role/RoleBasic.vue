@@ -1,5 +1,9 @@
 <template>
   <div>
-    <h1>员工奖惩</h1>
+    asasasasasas
   </div>
 </template>
+
+<script>
+
+</script>

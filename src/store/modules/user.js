@@ -44,9 +44,62 @@ export default {
       } catch (error) {
         console.log('error: ', error)
       }
-    }
-  },
+    },
+    async addUser({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/addUser`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        if (res.status === 200) {
 
+        }
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async isDisable({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/isDisable`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async deleteUser({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/deleteUser`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async getUserById({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/getUserById`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async updateUserById({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/updateUserById`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+
+  },
   mutations: {
     ['SET_ACCESS_TOKEN'](state, access_token) {
       console.log('access_token', access_token)

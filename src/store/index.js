@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './modules/user'
 import menu from './modules/menu'
+import role from './modules/role'
 import {instance} from '../libs/fetchData'
 import {getToken} from '../utils/util'
 
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
   mutations: {
     initMenu(state, menus) {
       state.routes = menus
+      console.log('state.routes', state.routes)
       window.localStorage.setItem('menu', JSON.stringify(menus));
     },
     login(state, user) {
@@ -25,7 +27,8 @@ const store = new Vuex.Store({
   actions: {},
   modules: {
     user,
-    menu
+    menu,
+    role
   }
 });
 

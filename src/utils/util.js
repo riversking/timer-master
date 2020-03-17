@@ -10,7 +10,7 @@ export const initMenu = (router, store) => {
   if (store.state.routes.length > 0) {
     return;
   }
-  const userId = store.state.userInfo.id;
+  const userId = store.state.userInfo.uid;
   store.dispatch('menuByUserId', {
     'param': userId
   }).then(res => {
@@ -34,7 +34,7 @@ export const formatRoutes = (routes) => {
       component,
       name,
       meta,
-      iconCls,
+      icon,
       children
     } = router;
     if (children.length > 0 && children instanceof Array) {
@@ -43,17 +43,11 @@ export const formatRoutes = (routes) => {
     let fmRouter = {
       path: path,
       name: name,
-      iconCls: iconCls,
+      icon: icon,
       meta: meta,
       children: children,
       component(resolve) {
-        if (component.startsWith("Home")) {
-          require(['../components/' + component + '.vue'], resolve);
-        } else if (component.startsWith("User")) {
-          require(['../components/user/' + component + '.vue'], resolve);
-        } else if (component.startsWith("Per")) {
-          require(['@/components/menu/' + component + '.vue'], resolve);
-        }
+        require(['../components/' + component + '.vue'], resolve);
       }
     };
     fmRoutes.push(fmRouter);

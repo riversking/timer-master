@@ -2,15 +2,15 @@
   <div>
     <el-container class="home-container">
       <el-header class="home-header">
-        <span class="home_title">微人事</span>
+        <span class="home_title">管理系统</span>
         <div style="display: flex;align-items: center;margin-right: 7px">
           <el-badge style="margin-right: 30px" :is-dot="this.$store.state.nfDot">
             <i class="fa fa-bell-o" @click="goChat" style="cursor: pointer"></i>
           </el-badge>
           <el-dropdown @command="handleCommand">
   <span class="el-dropdown-link home_userinfo" style="display: flex;align-items: center">
-    {{user.name}}
-    <i><img v-if="user.userface!=''" :src="user.userface"
+    {{user.nickname}}
+    <i><img v-if="user.avatar!=''" :src="'/image/'+user.avatar"
             style="width: 40px;height: 40px;margin-right: 5px;margin-left: 5px;border-radius: 40px"/></i>
   </span>
             <el-dropdown-menu slot="dropdown">
@@ -24,14 +24,17 @@
       <el-container>
         <el-aside width="180px" class="home-aside">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
-            <el-menu style="background: #ececec;width: 180px;" unique-opened router>
+            <el-menu style="background: #ececec;width: 180px;"  unique-opened router :default-active="$route.path">
               <el-submenu :index="index+''" v-for="(item,index) in routes" v-if="!item.hidden" :key="index">
                 <template slot="title">
-                  <i style="color: #409eff;margin-right: 5px" :class="item.iconCls"></i>
+                  <i style="color: #409eff;margin-right: 5px" :class="item.icon"></i>
                   <span>{{item.name}}</span>
                 </template>
                 <el-menu-item :index="child.path" v-for="(child,indexj) in item.children" :key="indexj">
-                  {{child.name}}
+                  <template slot="title">
+                    <i style="color: #409eff;margin-right: 5px" :class="child.icon"></i>
+                    <span>{{child.name}}</span>
+                  </template>
                 </el-menu-item>
               </el-submenu>
             </el-menu>
@@ -58,6 +61,7 @@
     mounted: function () {
 //      this.devMsg();
 //       this.loadNF();
+      this.activerouter = window.location.pathname;
     },
     methods: {
       loadNF() {
@@ -110,7 +114,7 @@
       handleselect: function (a, b) {
         this.reload()  // 点击侧边栏重新载入页面
       },
-      reload () {
+      reload() {
         this.isRouterAlive = false;
         this.$nextTick(function () {
           this.isRouterAlive = true
@@ -120,12 +124,13 @@
     data() {
       return {
         isDot: false,
-        isRouterAlive: true
+        isRouterAlive: true,
+        activerouter: ''
       }
     },
     computed: {
       user() {
-        return this.$store.state.user;
+        return this.$store.state.userInfo;
       },
       routes() {
         return this.$store.state.routes
@@ -169,7 +174,7 @@
     color: #fff;
     font-size: 22px;
     display: inline;
-    margin-left: 8px;
+    margin-left: 18px;
   }
 
   .home_userinfo {
