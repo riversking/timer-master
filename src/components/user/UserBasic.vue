@@ -24,6 +24,12 @@
           </div>
           <div>
             <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
+              导入用户
+            </el-button>
+            <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
+              导出用户
+            </el-button>
+            <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
               添加用户
             </el-button>
           </div>
