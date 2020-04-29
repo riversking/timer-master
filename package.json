@@ -10,9 +10,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "af-table-column": "^1.0.3",
     "axios": "^0.19.2",
     "el-select-tree": "^1.0.14",
     "element-ui": "^2.13.0",
+    "ex-table-column": "^1.0.7",
     "js-cookie": "^2.2.1",
     "vue": "^2.5.2",
     "vue-fontawesome-elementui-icon-picker": "^0.1.9",

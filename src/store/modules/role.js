@@ -1,7 +1,7 @@
 import {postData} from '../../libs/fetchData'
 
 
-const namespace = '/user/role'
+const namespace = 'api/v1/user/role'
 
 export default {
   state: {},

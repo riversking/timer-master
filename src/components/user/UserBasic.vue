@@ -78,16 +78,16 @@
           stripe
           size="medium"
           style="width: 100%">
-          <el-table-column
+          <af-table-column
             prop="id"
             label="#"
             align="center"
-            width="85px"/>
-          <el-table-column
+          />
+          <af-table-column
             prop="username"
             label="用户名"
             align="center"
-            width="85px">
+          >
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -96,22 +96,21 @@
               >{{scope.row.username}}
               </el-button>
             </template>
-          </el-table-column>
-          <el-table-column
+          </af-table-column>
+          <af-table-column
             prop="nickname"
             label="别名"
             align="center"
-            width="85px"/>
-          <el-table-column
+          />
+          <af-table-column
             prop="phone"
             label="手机"
             align="center"
-            width="110px"/>
-          <el-table-column
+          />
+          <af-table-column
             prop="roles"
             label="角色"
             align="center"
-            width="190px"
           >
             <template slot-scope="scope">
               <div slot="reference" class="tag-group">
@@ -121,24 +120,24 @@
                 </el-tag>
               </div>
             </template>
-          </el-table-column>
-          <el-table-column
+          </af-table-column>
+          <af-table-column
             prop="createUser"
             label="创建人"
             align="center"
-            width="80px"/>
-          <el-table-column
+          />
+          <af-table-column
             prop="isDisable"
             label="状态"
             :formatter="statusFormatter"
             align="center"
-            width="80px"/>
-          <el-table-column
+          />
+          <af-table-column
             prop="createTime"
             label="创建时间"
             align="center"
-            width="110px"/>
-          <el-table-column align="center" width="388px" label="操作">
+          />
+          <af-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -165,7 +164,7 @@
                 @click="handleDelete(scope.$index, scope.row)">删除
               </el-button>
             </template>
-          </el-table-column>
+          </af-table-column>
         </el-table>
         <div style="display: flex;justify-content: flex-end;margin-top: 8px">
           <el-pagination
