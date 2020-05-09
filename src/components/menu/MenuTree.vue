@@ -15,17 +15,17 @@
             size="medium"
             row-key="id"
             :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-            <el-table-column
+            <af-table-column
               prop="id"
               label="编号"
               align="center"
-              width="120">
-            </el-table-column>
-            <el-table-column
+              >
+            </af-table-column>
+            <af-table-column
               prop="name"
               label="名称"
               align="center"
-              width="150">
+              >
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -34,44 +34,44 @@
                 >{{scope.row.name}}
                 </el-button>
               </template>
-            </el-table-column>
-            <el-table-column
+            </af-table-column>
+            <af-table-column
               prop="path"
               label="路由路径"
               align="center"
-              width="180">
-            </el-table-column>
-            <el-table-column
+             >
+            </af-table-column>
+            <af-table-column
               prop="type"
               label="类型"
               align="center"
               :formatter="typeFormatter"
-              width="150">
-            </el-table-column>
-            <el-table-column
+              >
+            </af-table-column>
+            <af-table-column
               prop="icon"
               label="图标"
               align="center"
-              width="120">
+              >
               <template slot-scope="scope">
                 <div slot="reference" class="tag-group">
                   <i :class="scope.row.icon"></i>
                 </div>
               </template>
-            </el-table-column>
-            <el-table-column
+            </af-table-column>
+            <af-table-column
               prop="code"
               label="权限标识"
               align="center"
-              width="150">
-            </el-table-column>
-            <el-table-column
+              >
+            </af-table-column>
+            <af-table-column
               prop="sort"
               label="排序"
               align="center"
-              width="100">
-            </el-table-column>
-            <el-table-column align="center" width="250px" label="操作">
+              >
+            </af-table-column>
+            <af-table-column align="center" label="操作">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -86,7 +86,7 @@
                   @click="handleDelete(scope.$index, scope.row)">删除
                 </el-button>
               </template>
-            </el-table-column>
+            </af-table-column>
           </el-table>
         </el-col>
       </el-row>

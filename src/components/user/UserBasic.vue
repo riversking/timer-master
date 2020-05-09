@@ -77,7 +77,7 @@
           border
           stripe
           size="medium"
-          style="width: 100%">
+        >
           <af-table-column
             prop="id"
             label="#"
@@ -137,7 +137,7 @@
             label="创建时间"
             align="center"
           />
-          <af-table-column align="center" label="操作">
+          <af-table-column align="center" width="388px" label="操作">
             <template slot-scope="scope">
               <el-button
                 size="mini"
@@ -221,7 +221,7 @@
                 <el-form-item label="头像:" prop="upload">
                   <el-upload
                     class="upload-demo"
-                    action="/file/upload"
+                    action="api/v1/file/upload"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
                     :on-success="handleSuccess"
@@ -358,7 +358,7 @@
         console.log(file);
       },
       handleSuccess(fileList) {
-        this.file = fileList.rsp
+        this.file = fileList.rsp.filename
         console.log('fileList', fileList)
       },
       handleExceed(files, fileList) {
@@ -435,7 +435,7 @@
             this.userForm = res.data;
             this.fileList.push({
               'name': res.data.avatar,
-              'url': '/image/' + res.data.avatar
+              'url': 'api/v1/image/' + res.data.avatar
             });
             this.file = res.data.avatar;
             this.dialogVisible = true;

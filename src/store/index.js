@@ -5,7 +5,7 @@ import menu from './modules/menu'
 import role from './modules/role'
 import {instance} from '../libs/fetchData'
 import {getToken} from '../utils/util'
-
+import router from '../router';
 
 Vue.use(Vuex)
 
@@ -43,4 +43,16 @@ instance.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
+instance.interceptors.response.use(response => {
+  if (response.status === 200) {
+    return response;
+  } else {
+    Promise.reject();
+  }
+}, error => {
+  if (error.code === 401) {
+    router.replace('/');
+  }
+  return Promise.reject();
+})
 export default store

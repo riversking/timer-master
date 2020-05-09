@@ -14,15 +14,20 @@ export const initMenu = (router, store) => {
   store.dispatch('menuByUserId', {
     'param': userId
   }).then(res => {
-    if (res.code === '0') {
-      const fmtRoutes = formatRoutes(res.data);
-      router.matcher = new Router().matcher;
-      router.addRoutes(fmtRoutes);
-      store.commit('initMenu', fmtRoutes);
-      // store.dispatch('connect');
+    if (res) {
+      if (res.code === '0') {
+        const fmtRoutes = formatRoutes(res.data);
+        router.matcher = new Router().matcher;
+        router.addRoutes(fmtRoutes);
+        store.commit('initMenu', fmtRoutes);
+        // store.dispatch('connect');
+      } else {
+        Message.error(res.message)
+      }
     } else {
-      Message.error(res.message)
+      router.replace('/')
     }
+
   });
 };
 
