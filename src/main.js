@@ -39,14 +39,14 @@ Vue.prototype.deleteRequest = deleteRequest;
 
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/') {
+  if (to.path === '/login') {
     next();
   } else {
     if (window.localStorage.getItem("user")) {
       initMenu(router, store);
       next();
     } else {
-      next('/');
+      next('/login');
     }
   }
 })

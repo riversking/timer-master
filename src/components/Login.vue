@@ -46,7 +46,6 @@
         }).then(resp => {
           _this.loading = false;
           if (resp.code === '0') {
-            console.log("resppppp", resp);
             const data = resp.data;
             _this.$store.commit('login', data);
             window.localStorage.setItem('user', JSON.stringify(data));

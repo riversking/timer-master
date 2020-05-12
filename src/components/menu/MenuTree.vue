@@ -198,7 +198,7 @@
     },
     mounted() {
       this.getMenuTree();
-      this.getParentMenu();
+      // this.getParentMenu();
     },
     methods: {
       getMenuTree() {
