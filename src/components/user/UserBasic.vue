@@ -74,6 +74,7 @@
       <div style="margin-top: 10px">
         <el-table
           :data="userList"
+          v-loading="loading"
           border
           stripe
           size="medium"
@@ -183,7 +184,7 @@
         @close="closeDialog"
         width="80%">
         <div>
-          <el-form :model="userForm" :disabled="detail" ref="userForm" label-position="left" label-width="80px"
+          <el-form :model="userForm" :disabled="detail" ref="userForm" label-position="right" label-width="80px"
                    style="margin-left: 50px;">
             <el-row>
               <el-col :span="24">
@@ -231,14 +232,14 @@
                     :limit=1
                     :on-exceed="handleExceed"
                   >
-                    <el-button size="small" type="primary">点击上传</el-button>
-                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                    <el-button size="small" v-if="edit" type="primary">点击上传</el-button>
+                    <div slot="tip" v-if="edit" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                   </el-upload>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="12">
+              <el-col :span="10">
                 <el-form-item label="角色:" prop="role">
                   <el-select v-model="userForm.roleIds" multiple placeholder="请选择">
                     <el-option
@@ -255,8 +256,8 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" v-if="edit" @click="addUser">确 定</el-button>
-          <el-button type="primary" v-if="!edit" @click="editUser">编 辑</el-button>
+          <el-button type="primary" v-if="detail" @click="addUser">确 定</el-button>
+          <el-button type="primary" v-if="edit" @click="editUser">编 辑</el-button>
         </div>
       </el-dialog>
       <el-dialog
@@ -318,7 +319,8 @@
         roleForm: {
           ids: []
         },
-        userId: ''
+        userId: '',
+        loading: true
       }
     },
     mounted() {
@@ -340,7 +342,8 @@
         }).then(resp => {
           if (resp.code === '0') {
             this.userList = resp.data.records;
-            this.total = resp.data.total
+            this.total = resp.data.total;
+            this.loading = false;
           }
         });
       },
@@ -390,7 +393,7 @@
         });
       },
       handleEdit(index, row) {
-        this.edit = false;
+        this.edit = true;
         this.detail = false;
         this.title = '编辑用户';
         this.getUser(row.id);
