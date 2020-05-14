@@ -23,7 +23,7 @@
             </el-button>
           </div>
           <div>
-            <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
+            <el-button type="primary" icon="el-icon-plus" size="small" @click="showUploadDialog">
               导入用户
             </el-button>
             <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
@@ -218,9 +218,11 @@
                             placeholder="请输入昵称"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="10">
                 <el-form-item label="头像:" prop="upload">
+                  <div class="block"><el-avatar shape="square" :size="158" :src="'api/v1/image/'+file"></el-avatar></div>
                   <el-upload
+                    v-if="edit"
                     class="upload-demo"
                     action="api/v1/file/upload"
                     :on-preview="handlePreview"
@@ -485,6 +487,9 @@
               this.initUserList()
             }
           })
+      },
+      showUploadDialog() {
+
       }
     }
   }

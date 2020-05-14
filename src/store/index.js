@@ -51,7 +51,7 @@ instance.interceptors.response.use(response => {
   }
 }, error => {
   if (error.code === 401) {
-    router.replace('/');
+    router.replace('/login');
   }
   return Promise.reject();
 })
