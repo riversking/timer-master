@@ -220,7 +220,9 @@
               </el-col>
               <el-col :span="10">
                 <el-form-item label="头像:" prop="upload">
-                  <div class="block"><el-avatar shape="square" :size="158" :src="'api/v1/image/'+file"></el-avatar></div>
+                  <div class="block">
+                    <el-avatar shape="square" :size="158" :src="'api/v1/image/'+file"></el-avatar>
+                  </div>
                   <el-upload
                     v-if="edit"
                     class="upload-demo"
@@ -285,6 +287,33 @@
           <el-button type="primary" @click="addRoleByUserId">确 定</el-button>
         </div>
       </el-dialog>
+      <el-dialog
+        :visible.sync="dialogUpload"
+        :destroy-on-close="true"
+        @close="closeUpload"
+        width="25%">
+        <el-row>
+          <el-col :span="12">
+            导入用户:
+          </el-col>
+          <el-col :span="12">
+            <el-upload
+              class="upload-demo"
+              action="api/v1/file/upload"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :on-success="handleSuccess"
+              ref="uploadFile"
+              :file-list="uploadFileList"
+              :limit=1
+              :on-exceed="handleExceed"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <div slot="tip" class="el-upload__tip">只能上传Excel文件</div>
+            </el-upload>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -310,6 +339,7 @@
           mail: ''
         },
         fileList: [],
+        uploadFileList: [],
         file: '',
         roles: [],
         total: 0,
@@ -322,7 +352,8 @@
           ids: []
         },
         userId: '',
-        loading: true
+        loading: true,
+        dialogUpload: false,
       }
     },
     mounted() {
@@ -489,7 +520,10 @@
           })
       },
       showUploadDialog() {
-
+        this.dialogUpload = true
+      },
+      closeUpload() {
+        this.dialogUpload = false
       }
     }
   }
