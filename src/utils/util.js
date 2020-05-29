@@ -14,7 +14,9 @@ export const initMenu = (router, store) => {
   store.dispatch('menuByUserId', {
     'param': userId
   }).then(res => {
+
     if (res) {
+
       if (res.code === '0') {
         const fmtRoutes = formatRoutes(res.data);
         router.matcher = new Router().matcher;

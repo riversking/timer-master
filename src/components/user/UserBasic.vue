@@ -293,10 +293,10 @@
         @close="closeUpload"
         width="25%">
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8" style="text-align: right">
             导入用户:
           </el-col>
-          <el-col :span="12">
+          <el-col :span="12" style="text-align: left;margin-left: 5px">
             <el-upload
               class="upload-demo"
               action="api/v1/file/upload"
@@ -311,6 +311,7 @@
               <el-button size="small" type="primary">点击上传</el-button>
               <div slot="tip" class="el-upload__tip">只能上传Excel文件</div>
             </el-upload>
+            <a :href="`static/template.xlsx`" target="_blank" download="template.xlsx">点击下载模板</a>
           </el-col>
         </el-row>
       </el-dialog>

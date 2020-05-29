@@ -14,6 +14,7 @@
             stripe
             size="medium"
             row-key="id"
+            v-loading="loading"
             :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             <af-table-column
               prop="id"
@@ -193,7 +194,8 @@
         },
         detail: false,
         parentMenu: [],
-        edit: false
+        edit: false,
+        loading: true
       };
     },
     mounted() {
@@ -205,6 +207,7 @@
         this.$store.dispatch('getMenu')
           .then(res => {
             this.menuTree = res.data;
+            this.loading = false;
           })
       },
       typeFormatter(row, column) {
