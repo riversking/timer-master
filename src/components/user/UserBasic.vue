@@ -265,13 +265,15 @@
         </div>
       </el-dialog>
       <el-dialog
-        :title="title"
+        title="添加角色"
         :visible.sync="roleVisible"
         :destroy-on-close="true"
         width="80%">
-        <el-form :model="roleForm" ref="roleForm" label-position="left" label-width="80px"
-                 style="margin-left: 50px;">
-          <el-form-item label="角色:" prop="role">
+        <el-row>
+          <el-col :span="8" style="text-align: right">
+            角色:
+          </el-col>
+          <el-col :span="12" style="text-align: left;margin-left: 5px">
             <el-select v-model="roleForm.ids" multiple placeholder="请选择">
               <el-option
                 v-for="item in roles"
@@ -280,8 +282,8 @@
                 :value="item.id">
               </el-option>
             </el-select>
-          </el-form-item>
-        </el-form>
+          </el-col>
+        </el-row>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
           <el-button type="primary" @click="addRoleByUserId">确 定</el-button>
