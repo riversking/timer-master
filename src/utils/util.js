@@ -10,13 +10,8 @@ export const initMenu = (router, store) => {
   if (store.state.routes.length > 0) {
     return;
   }
-  const userId = store.state.userInfo.uid;
-  store.dispatch('menuByUserId', {
-    'param': userId
-  }).then(res => {
-
+  store.dispatch('menuByUserId').then(res => {
     if (res) {
-
       if (res.code === '0') {
         const fmtRoutes = formatRoutes(res.data);
         router.matcher = new Router().matcher;
@@ -29,7 +24,6 @@ export const initMenu = (router, store) => {
     } else {
       router.replace('/')
     }
-
   });
 };
 

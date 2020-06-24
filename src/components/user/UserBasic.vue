@@ -200,6 +200,12 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
+                <el-form-item label="工号:" prop="userId" v-if="edit">
+                  <el-input size="medium" v-model="userForm.userId" style="width: 80%" prefix-icon="el-icon-edit"
+                            placeholder="请输入工号"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
                 <el-form-item label="手机号:" prop="phone">
                   <el-input size="medium" v-model="userForm.phone" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入手机号"></el-input>
@@ -220,7 +226,7 @@
               </el-col>
               <el-col :span="10">
                 <el-form-item label="头像:" prop="upload">
-                  <div class="block">
+                  <div class="block" v-if="detail">
                     <el-avatar shape="square" :size="158" :src="'api/v1/image/'+file"></el-avatar>
                   </div>
                   <el-upload
@@ -268,24 +274,23 @@
         title="添加角色"
         :visible.sync="roleVisible"
         :destroy-on-close="true"
-        width="80%">
+        >
         <el-row>
-          <el-col :span="8" style="text-align: right">
-            角色:
-          </el-col>
-          <el-col :span="12" style="text-align: left;margin-left: 5px">
-            <el-select v-model="roleForm.ids" multiple placeholder="请选择">
-              <el-option
-                v-for="item in roles"
-                :key="item.roleName"
-                :label="item.roleName"
-                :value="item.id">
-              </el-option>
-            </el-select>
-          </el-col>
+          <el-form  status-icon  ref="ruleForm" label-width="50px" class="demo-ruleForm">
+            <el-form-item label="角色">
+              <el-select v-model="roleForm.ids" multiple placeholder="请选择">
+                <el-option
+                  v-for="item in roles"
+                  :key="item.roleName"
+                  :label="item.roleName"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
         </el-row>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button @click="roleVisible = false">取 消</el-button>
           <el-button type="primary" @click="addRoleByUserId">确 定</el-button>
         </div>
       </el-dialog>
@@ -336,6 +341,7 @@
           id: '',
           username: '',
           password: '',
+          userId: '',
           phone: '',
           roleIds: [],
           nickname: '',
@@ -414,6 +420,7 @@
         let obj = {
           'username': this.userForm.username,
           'password': this.userForm.password,
+          'userId': this.userForm.userId,
           'phone': this.userForm.phone,
           'avatar': this.file,
           'createUser': this.$store.state.userInfo.username,
@@ -437,6 +444,7 @@
       handleAddRole(index, row) {
         this.roleVisible = true
         this.userId = row.id
+
       },
       handleDisable(index, row) {
         let obj = {
