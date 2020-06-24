@@ -200,7 +200,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="工号:" prop="userId" v-if="edit">
+                <el-form-item label="工号:" prop="userId" v-if="edit==false">
                   <el-input size="medium" v-model="userForm.userId" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入工号"></el-input>
                 </el-form-item>
@@ -266,7 +266,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" v-if="detail" @click="addUser">确 定</el-button>
+          <el-button type="primary" v-if="edit==false" @click="addUser">确 定</el-button>
           <el-button type="primary" v-if="edit" @click="editUser">编 辑</el-button>
         </div>
       </el-dialog>
@@ -392,7 +392,6 @@
       showDialog() {
         this.fileList = [];
         this.dialogVisible = true;
-        this.edit = true;
         this.title = '添加用户';
         this.userForm = {}
       },
