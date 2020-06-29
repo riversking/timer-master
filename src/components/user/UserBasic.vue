@@ -99,6 +99,11 @@
             </template>
           </af-table-column>
           <af-table-column
+            prop="userId"
+            label="工号"
+            align="center"
+          />
+          <af-table-column
             prop="nickname"
             label="别名"
             align="center"
@@ -122,11 +127,6 @@
               </div>
             </template>
           </af-table-column>
-          <af-table-column
-            prop="createUser"
-            label="创建人"
-            align="center"
-          />
           <af-table-column
             prop="isDisable"
             label="状态"
@@ -190,17 +190,19 @@
               <el-col :span="24">
                 <el-form-item label="用户名:" prop="username">
                   <el-input size="medium" v-model="userForm.username" style="width: 80%" prefix-icon="el-icon-edit"
-                            auto-complete="new-accounts"  placeholder="请输入员工姓名"></el-input>
+                            auto-complete="new-accounts"
+                            placeholder="请输入员工姓名"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="密码:" prop="password" v-if="edit===false">
+                <el-form-item label="密码:" prop="password" v-if="edit===false && detail === false">
                   <el-input size="medium" v-model="userForm.password" style="width: 80%" prefix-icon="el-icon-edit"
-                            auto-complete="new-password" placeholder="请输入密码" show-password></el-input>
+                            auto-complete="new-password"
+                            placeholder="请输入密码" show-password></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="工号:" prop="userId" v-if="edit===false">
+                <el-form-item label="工号:" prop="userId">
                   <el-input size="medium" v-model="userForm.userId" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入工号"></el-input>
                 </el-form-item>
@@ -230,7 +232,7 @@
                     <el-avatar shape="square" :size="158" :src="'api/v1/image/'+file"></el-avatar>
                   </div>
                   <el-upload
-                    v-if="edit"
+                    v-if="detail === false"
                     class="upload-demo"
                     action="api/v1/file/upload"
                     :on-preview="handlePreview"
@@ -242,8 +244,8 @@
                     :limit=1
                     :on-exceed="handleExceed"
                   >
-                    <el-button size="small" v-if="edit" type="primary">点击上传</el-button>
-                    <div slot="tip" v-if="edit" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                    <el-button size="small" v-if="detail === false" type="primary">点击上传</el-button>
+                    <div slot="tip" v-if="detail === false" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                   </el-upload>
                 </el-form-item>
               </el-col>
@@ -266,7 +268,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" v-if="edit===false" @click="addUser">确 定</el-button>
+          <el-button type="primary" v-if="edit==false" @click="addUser">确 定</el-button>
           <el-button type="primary" v-if="edit" @click="editUser">编 辑</el-button>
         </div>
       </el-dialog>
@@ -274,9 +276,9 @@
         title="添加角色"
         :visible.sync="roleVisible"
         :destroy-on-close="true"
-        >
+      >
         <el-row>
-          <el-form  status-icon  ref="ruleForm" label-width="50px" class="demo-ruleForm">
+          <el-form status-icon ref="ruleForm" label-width="50px" class="demo-ruleForm">
             <el-form-item label="角色">
               <el-select v-model="roleForm.ids" multiple placeholder="请选择">
                 <el-option
@@ -392,8 +394,6 @@
       showDialog() {
         this.fileList = [];
         this.dialogVisible = true;
-        this.edit = false
-        this.detail = false
         this.title = '添加用户';
         this.userForm = {}
       },
@@ -509,11 +509,13 @@
       },
       closeDialog() {
         this.dialogVisible = false
+        this.edit = false
+        this.detail = false
         this.fileList = []
         this.$refs['userForm'].resetFields();
       },
       showDetail(index, row) {
-        this.edit = true;
+        this.edit = false;
         this.detail = true
         this.title = '用户详情';
         this.getUser(row.id);
