@@ -105,7 +105,7 @@
           />
           <af-table-column
             prop="nickname"
-            label="别名"
+            label="姓名"
             align="center"
           />
           <af-table-column
@@ -191,7 +191,7 @@
                 <el-form-item label="用户名:" prop="username">
                   <el-input size="medium" v-model="userForm.username" style="width: 80%" prefix-icon="el-icon-edit"
                             auto-complete="new-accounts"
-                            placeholder="请输入员工姓名"></el-input>
+                            placeholder="请输入用户名"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
@@ -221,9 +221,9 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="!edit">
-                <el-form-item label="昵称:" prop="nickname">
+                <el-form-item label="姓名:" prop="nickname">
                   <el-input size="medium" v-model="userForm.nickname" style="width: 80%" prefix-icon="el-icon-edit"
-                            placeholder="请输入昵称"></el-input>
+                            placeholder="请输入姓名"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
