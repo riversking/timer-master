@@ -190,17 +190,17 @@
               <el-col :span="24">
                 <el-form-item label="用户名:" prop="username">
                   <el-input size="medium" v-model="userForm.username" style="width: 80%" prefix-icon="el-icon-edit"
-                            placeholder="请输入员工姓名"></el-input>
+                            auto-complete="new-accounts"  placeholder="请输入员工姓名"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="密码:" prop="password" v-if="edit">
+                <el-form-item label="密码:" prop="password" v-if="edit===false">
                   <el-input size="medium" v-model="userForm.password" style="width: 80%" prefix-icon="el-icon-edit"
-                            placeholder="请输入密码" show-password></el-input>
+                            auto-complete="new-password" placeholder="请输入密码" show-password></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="工号:" prop="userId" v-if="edit==false">
+                <el-form-item label="工号:" prop="userId" v-if="edit===false">
                   <el-input size="medium" v-model="userForm.userId" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入工号"></el-input>
                 </el-form-item>
@@ -266,7 +266,7 @@
         </div>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" v-if="edit==false" @click="addUser">确 定</el-button>
+          <el-button type="primary" v-if="edit===false" @click="addUser">确 定</el-button>
           <el-button type="primary" v-if="edit" @click="editUser">编 辑</el-button>
         </div>
       </el-dialog>
@@ -392,6 +392,8 @@
       showDialog() {
         this.fileList = [];
         this.dialogVisible = true;
+        this.edit = false
+        this.detail = false
         this.title = '添加用户';
         this.userForm = {}
       },
@@ -511,7 +513,7 @@
         this.$refs['userForm'].resetFields();
       },
       showDetail(index, row) {
-        this.edit = false;
+        this.edit = true;
         this.detail = true
         this.title = '用户详情';
         this.getUser(row.id);
