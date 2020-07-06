@@ -23,10 +23,10 @@
             </el-button>
           </div>
           <div>
-            <el-button type="primary" icon="el-icon-plus" size="small" @click="showUploadDialog">
+            <el-button type="primary" icon="el-icon-upload2" size="small" @click="showUploadDialog">
               导入用户
             </el-button>
-            <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
+            <el-button type="primary" icon="el-icon-download" size="small" @click="showDialog">
               导出用户
             </el-button>
             <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
