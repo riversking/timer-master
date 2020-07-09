@@ -1,4 +1,4 @@
-import {postData} from '../../libs/fetchData'
+import {getData, postData} from '../../libs/fetchData'
 import {setToken} from '../../utils/util'
 
 
@@ -97,9 +97,10 @@ export default {
       } catch (error) {
         console.log('error: ', error)
       }
-    },
+    }
 
-  },
+  }
+  ,
   mutations: {
     ['SET_ACCESS_TOKEN'](state, access_token) {
       console.log('access_token', access_token)
@@ -110,7 +111,8 @@ export default {
         content: state.access_token,
         type: 'session'
       })
-    },
+    }
+    ,
     ['SET_REFRESH_TOKEN'](state, rfToken) {
       state.refresh_token = rfToken
       setStore({
@@ -118,7 +120,8 @@ export default {
         content: state.refresh_token,
         type: 'session'
       })
-    },
+    }
+    ,
     ['USER_INFO'](state, payload) {
       console.log('payload.datas.avatar', payload.datas.avatar)
       state.avatorImgPath = payload.datas.avatar

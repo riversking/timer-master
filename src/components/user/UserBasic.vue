@@ -26,7 +26,7 @@
             <el-button type="primary" icon="el-icon-upload2" size="small" @click="showUploadDialog">
               导入用户
             </el-button>
-            <el-button type="primary" icon="el-icon-download" size="small" @click="showDialog">
+            <el-button type="primary" icon="el-icon-download" size="small" @click="exportUserExcel">
               导出用户
             </el-button>
             <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
@@ -538,6 +538,24 @@
       },
       closeUpload() {
         this.dialogUpload = false
+      },
+      exportUserExcel() {
+        this.$store.dispatch('exportUser')
+          .then(res => {
+              let blob = new Blob([res], {type: 'application/vnd.ms-excel;charset=utf-8'});
+              console.log("blob", blob)
+              let url = window.URL.createObjectURL(blob);
+              let fileName = "出团通知单.xlsx";
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = fileName;
+              a.style.display = "none";
+              document.body.appendChild(a);
+              a.click();
+              URL.revokeObjectURL(a.href);
+              document.body.removeChild(a);
+            }
+          )
       }
     }
   }

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import user from './modules/user'
 import menu from './modules/menu'
 import role from './modules/role'
+import file from './modules/file'
 import {instance} from '../libs/fetchData'
 import {getToken} from '../utils/util'
 import router from '../router';
@@ -28,7 +29,8 @@ const store = new Vuex.Store({
   modules: {
     user,
     menu,
-    role
+    role,
+    file
   }
 });
 
