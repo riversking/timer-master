@@ -12,9 +12,7 @@ export let instance = axios.create({
 
 export const getData = (url, param) => {
   return (
-    instance.get(`${url}`, {
-      params: param
-    })
+    instance.get(`${url}`, param)
   )
 }
 

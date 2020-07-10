@@ -328,6 +328,9 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
+  import {getToken} from "../../utils/util";
+
   export default {
     name: 'user',
     data() {
@@ -540,22 +543,26 @@
         this.dialogUpload = false
       },
       exportUserExcel() {
-        this.$store.dispatch('exportUser')
-          .then(res => {
-              let blob = new Blob([res], {type: 'application/vnd.ms-excel;charset=utf-8'});
-              console.log("blob", blob)
-              let url = window.URL.createObjectURL(blob);
-              let fileName = "出团通知单.xlsx";
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = fileName;
-              a.style.display = "none";
-              document.body.appendChild(a);
-              a.click();
-              URL.revokeObjectURL(a.href);
-              document.body.removeChild(a);
-            }
-          )
+        let execlName = "a.xlsx"
+        axios({
+          method: 'GET',
+          url: 'api/v1/file/exportUser',
+          // params: params,
+          headers: {
+            "Authorization": 'Bearer ' + getToken()
+          },
+          responseType: 'arraybuffer'
+        }).then(res => {
+          const blob = new Blob([res.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
+          const aEle = document.createElement('a');     // 创建a标签
+          const href = window.URL.createObjectURL(blob);       // 创建下载的链接
+          aEle.href = href;
+          aEle.download = execlName;  // 下载后文件名
+          document.body.appendChild(aEle);
+          aEle.click();     // 点击下载
+          document.body.removeChild(aEle); // 下载完成移除元素
+          window.URL.revokeObjectURL(href) // 释放掉blob对象
+        })
       }
     }
   }
