@@ -2,7 +2,7 @@
   <div>
     <el-card class="box-card" style="margin-top: 10px">
       <el-row>
-        <el-col :span="24">
+        <el-col :span="24" style="text-align: right">
           <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
             添加菜单
           </el-button>

@@ -36,6 +36,26 @@ export default {
       } catch (error) {
         console.log('error: ', error)
       }
+    },
+    async getRolePage({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/rolePage`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async addRole({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/addRole`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
     }
   },
 
