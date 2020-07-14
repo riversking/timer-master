@@ -39,6 +39,28 @@
               align="center"
             >
             </af-table-column>
+            <af-table-column
+              prop="createTime"
+              label="创建时间"
+              align="center"
+            >
+            </af-table-column>
+            <af-table-column align="center" width="194px" label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="success"
+                  icon="el-icon-edit"
+                  @click="handleEdit(scope.$index, scope.row)">编辑
+                </el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  icon="el-icon-delete"
+                  @click="handleDelete(scope.$index, scope.row)">删除
+                </el-button>
+              </template>
+            </af-table-column>
           </el-table>
           <div style="display: flex;justify-content: flex-end;margin-top: 8px">
             <el-pagination
@@ -59,13 +81,13 @@
         width="80%">
         <el-form :model="roleForm" :disabled="detail" ref="roleForm" label-position="left" label-width="80px"
                  style="margin-left: 50px;">
-          <el-form-item label="角色名称">
+          <el-form-item label="角色名称" prop="roleName">
             <el-input v-model="roleForm.roleName"></el-input>
           </el-form-item>
-          <el-form-item label="角色编码">
+          <el-form-item label="角色编码" prop="roleCode">
             <el-input v-model="roleForm.roleCode"></el-input>
           </el-form-item>
-          <el-form-item label="角色描述">
+          <el-form-item label="角色描述" prop="roleDesc">
             <el-input v-model="roleForm.roleDesc"></el-input>
           </el-form-item>
         </el-form>
@@ -146,6 +168,24 @@
             this.initRoleList()
           }
         });
+      },
+      handleEdit(index, row) {
+        this.edit = false;
+        this.detail = false
+        this.getRoleById(row.id);
+      },
+      handleDelete(index, row) {
+        this.$store.dispatch('deleteRole', {'param': id})
+          .then(res => {
+            this.getRoleById(row.id);
+          })
+      },
+      getRoleById(id) {
+        this.$store.dispatch('getRoleById', {'param': id})
+          .then(res => {
+            this.roleForm = res.data;
+            this.dialogVisible = true
+          })
       }
     }
   }

@@ -56,6 +56,26 @@ export default {
       } catch (error) {
         console.log('error: ', error)
       }
+    },
+    async getRoleById({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/roleDetail`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async deleteRole({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/deleteRole`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
     }
   },
 

@@ -20,9 +20,10 @@ export const initMenu = (router, store) => {
         // store.dispatch('connect');
       } else {
         Message.error(res.message)
+        router.replace('/login')
       }
     } else {
-      router.replace('/')
+      router.replace('/login')
     }
   });
 };
