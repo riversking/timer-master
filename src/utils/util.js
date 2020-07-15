@@ -30,30 +30,32 @@ export const initMenu = (router, store) => {
 
 export const formatRoutes = (routes) => {
   let fmRoutes = [];
-  routes.forEach(router => {
-    let {
-      path,
-      component,
-      name,
-      meta,
-      icon,
-      children
-    } = router;
-    if (children !== null && children instanceof Array) {
-      children = formatRoutes(children);
-    }
-    let fmRouter = {
-      path: path,
-      name: name,
-      icon: icon,
-      meta: meta,
-      children: children,
-      component(resolve) {
-        require(['../components/' + component + '.vue'], resolve);
+  if (null != routes) {
+    routes.forEach(router => {
+      let {
+        path,
+        component,
+        name,
+        meta,
+        icon,
+        children
+      } = router;
+      if (children !== null && children instanceof Array) {
+        children = formatRoutes(children);
       }
-    };
-    fmRoutes.push(fmRouter);
-  });
+      let fmRouter = {
+        path: path,
+        name: name,
+        icon: icon,
+        meta: meta,
+        children: children,
+        component(resolve) {
+          require(['../components/' + component + '.vue'], resolve);
+        }
+      };
+      fmRoutes.push(fmRouter);
+    });
+  }
   return fmRoutes;
 };
 

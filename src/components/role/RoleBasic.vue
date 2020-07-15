@@ -175,9 +175,9 @@
         this.getRoleById(row.id);
       },
       handleDelete(index, row) {
-        this.$store.dispatch('deleteRole', {'param': id})
+        this.$store.dispatch('deleteRole', {'param': row.id})
           .then(res => {
-            this.getRoleById(row.id);
+            this.initRoleList();
           })
       },
       getRoleById(id) {
