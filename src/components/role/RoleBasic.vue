@@ -3,6 +3,7 @@
     <el-card class="box-card" style="margin-top: 10px">
       <el-row>
         <el-col :span="24" style="text-align: right">
+          <el-input placeholder="请输入内容"  v-model="roleName" clearable></el-input>
           <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
             添加角色
           </el-button>
@@ -117,7 +118,8 @@
           roleCode: '',
           roleDesc: ''
         },
-        detail: false
+        detail: false,
+        roleName: ''
       }
     },
     mounted() {
@@ -126,6 +128,7 @@
     methods: {
       initRoleList() {
         let query = {
+          roleName: this.roleName,
           page: this.page,
           pageSize: this.size,
         }
