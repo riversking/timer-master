@@ -2,8 +2,14 @@
   <div>
     <el-card class="box-card" style="margin-top: 10px">
       <el-row>
-        <el-col :span="24" style="text-align: right">
-          <el-input placeholder="请输入内容"  v-model="roleName" clearable></el-input>
+        <el-col :span="12" style="text-align: left">
+          <el-input placeholder="请输入内容" v-model="roleName" style="width: 200px"   size="small" clearable></el-input>
+          <el-button type="primary" icon="el-icon-search" size="small">
+            搜索
+          </el-button>
+        </el-col>
+        <el-col :span="12" style="text-align: right">
+
           <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
             添加角色
           </el-button>
