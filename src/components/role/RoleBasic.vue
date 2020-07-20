@@ -3,8 +3,8 @@
     <el-card class="box-card" style="margin-top: 10px">
       <el-row>
         <el-col :span="12" style="text-align: left">
-          <el-input placeholder="请输入内容" v-model="roleName" style="width: 200px"   size="small" clearable></el-input>
-          <el-button type="primary" icon="el-icon-search" size="small">
+          <el-input placeholder="请输入内容" v-model="roleName" style="width: 200px" size="small" clearable></el-input>
+          <el-button type="primary" icon="el-icon-search" size="small" @click="initRoleList">
             搜索
           </el-button>
         </el-col>
@@ -59,6 +59,12 @@
                   type="success"
                   icon="el-icon-edit"
                   @click="handleEdit(scope.$index, scope.row)">编辑
+                </el-button>
+                <el-button
+                  size="mini"
+                  type="success"
+                  icon="el-icon-s-fold"
+                  @click="handleMenu(scope.$index, scope.row)">添加权限
                 </el-button>
                 <el-button
                   size="mini"
@@ -195,6 +201,9 @@
             this.roleForm = res.data;
             this.dialogVisible = true
           })
+      },
+      handleMenu(index, row) {
+
       }
     }
   }
