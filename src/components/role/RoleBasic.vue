@@ -52,19 +52,19 @@
               align="center"
             >
             </af-table-column>
-            <af-table-column align="center" width="194px" label="操作">
+            <af-table-column align="center" width="372px" label="操作">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
-                  type="success"
+                  type="primary"
                   icon="el-icon-edit"
                   @click="handleEdit(scope.$index, scope.row)">编辑
                 </el-button>
                 <el-button
                   size="mini"
                   type="success"
-                  icon="el-icon-s-fold"
-                  @click="handleMenu(scope.$index, scope.row)">添加权限
+                  icon="el-icon-s-unfold"
+                  @click="handlePermission(scope.$index, scope.row)">添加权限
                 </el-button>
                 <el-button
                   size="mini"
@@ -87,7 +87,7 @@
         </el-col>
       </el-row>
       <el-dialog
-        title="title"
+        :title="title"
         :visible.sync="dialogVisible"
         :destroy-on-close="true"
         @close="closeDialog"
@@ -95,18 +95,19 @@
         <el-form :model="roleForm" :disabled="detail" ref="roleForm" label-position="left" label-width="80px"
                  style="margin-left: 50px;">
           <el-form-item label="角色名称" prop="roleName">
-            <el-input v-model="roleForm.roleName"></el-input>
+            <el-input v-model="roleForm.roleName" placeholder="请输入角色名称"></el-input>
           </el-form-item>
           <el-form-item label="角色编码" prop="roleCode">
-            <el-input v-model="roleForm.roleCode"></el-input>
+            <el-input v-model="roleForm.roleCode" placeholder="请输入角色编号"></el-input>
           </el-form-item>
           <el-form-item label="角色描述" prop="roleDesc">
-            <el-input v-model="roleForm.roleDesc"></el-input>
+            <el-input v-model="roleForm.roleDesc" placeholder="请输入角色介绍"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer" v-if="!detail">
           <el-button @click="dialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addRole">确 定</el-button>
+          <el-button type="primary" v-if="!edit" @click="addRole">确 定</el-button>
+          <el-button type="primary" v-if="edit" @click="editRole">编 辑</el-button>
         </div>
       </el-dialog>
     </el-card>
@@ -124,14 +125,17 @@
         loading: true,
         total: 0,
         dialogVisible: false,
-        edit: false,
+        edit: true,
         roleForm: {
+          id: '',
           roleName: '',
           roleCode: '',
           roleDesc: ''
         },
         detail: false,
-        roleName: ''
+        roleName: '',
+        title: '',
+        menuList: ''
       }
     },
     mounted() {
@@ -164,7 +168,8 @@
       },
       showDialog() {
         this.dialogVisible = true;
-        this.edit = true;
+        this.edit = false;
+        this.title = "添加角色"
       },
       closeDialog() {
         this.dialogVisible = false;
@@ -185,8 +190,9 @@
         });
       },
       handleEdit(index, row) {
-        this.edit = false;
-        this.detail = false
+        this.edit = true;
+        this.detail = false;
+        this.title = "编辑角色"
         this.getRoleById(row.id);
       },
       handleDelete(index, row) {
@@ -202,8 +208,31 @@
             this.dialogVisible = true
           })
       },
-      handleMenu(index, row) {
+      handlePermission(index, row) {
 
+      },
+      editRole() {
+        let obj = {
+          'id': this.roleForm.id,
+          'roleName': this.roleForm.roleName,
+          'roleCode': this.roleForm.roleCode,
+          'roleDesc': this.roleForm.roleDesc
+        };
+        this.$store.dispatch('editRole', obj)
+          .then(res => {
+            if (res.retCode === 0) {
+              this.dialogVisible = false;
+              this.initRoleList()
+            }
+          })
+      },
+      getMenuByRoleId(id) {
+        this.$store.dispatch('getMenuByRoleId', {"param": id})
+          .then(res => {
+            if (res.code === '0') {
+              this.menuList = res.data
+            }
+          })
       }
     }
   }
