@@ -543,7 +543,7 @@
         this.dialogUpload = false
       },
       exportUserExcel() {
-        let execlName = "a.xlsx"
+        let excelName = "用户列表.xlsx"
         axios({
           method: 'GET',
           url: 'api/v1/file/exportUser',
@@ -557,7 +557,7 @@
           const aEle = document.createElement('a');     // 创建a标签
           const href = window.URL.createObjectURL(blob);       // 创建下载的链接
           aEle.href = href;
-          aEle.download = execlName;  // 下载后文件名
+          aEle.download = excelName;  // 下载后文件名
           document.body.appendChild(aEle);
           aEle.click();     // 点击下载
           document.body.removeChild(aEle); // 下载完成移除元素
