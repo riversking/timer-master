@@ -22,13 +22,14 @@
         </div>
       </el-header>
       <el-container>
-        <el-aside width="180px" class="home-aside">
+        <el-aside width="180px" class="home-aside" style="overflow-x: hidden;">
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
             <el-menu style="background: #ececec;width: 180px;"  unique-opened router :default-active="$route.path">
               <el-submenu :index="index+''" v-for="(item,index) in routes" v-if="!item.hidden" :key="index">
                 <template slot="title">
                   <i style="color: #409eff;margin-right: 5px" :class="item.icon"></i>
                   <span>{{item.name}}</span>
+
                 </template>
                 <el-menu-item :index="child.path" v-for="(child,indexj) in item.children" :key="indexj">
                   <template slot="title">

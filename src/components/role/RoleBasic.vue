@@ -110,6 +110,17 @@
           <el-button type="primary" v-if="edit" @click="editRole">编 辑</el-button>
         </div>
       </el-dialog>
+      <el-dialog
+        title="添加权限"
+        :visible.sync="permissionVisible"
+        :destroy-on-close="true"
+        width="80%">
+        <el-tree
+          :data="menuList"
+          show-checkbox
+        >
+        </el-tree>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -125,6 +136,7 @@
         loading: true,
         total: 0,
         dialogVisible: false,
+        permissionVisible: false,
         edit: true,
         roleForm: {
           id: '',
@@ -209,7 +221,8 @@
           })
       },
       handlePermission(index, row) {
-
+        this.permissionVisible = true
+        this.getMenuByRoleId(row.id)
       },
       editRole() {
         let obj = {

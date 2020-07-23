@@ -466,10 +466,12 @@
       },
       currentChange(currentPage) {
         this.page = currentPage;
+        this.dialogVisible = true;
         this.initUserList();
       },
       sizeChange(currentSize) {
         this.size = currentSize;
+        this.dialogVisible = true;
         this.initUserList();
       },
       statusFormatter(row, column) {
