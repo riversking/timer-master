@@ -4,7 +4,7 @@
       <el-row>
         <el-col :span="12" style="text-align: left">
           <el-input placeholder="请输入内容" v-model="roleName" style="width: 200px" size="small" clearable></el-input>
-          <el-button type="primary" icon="el-icon-search" size="small">
+          <el-button type="primary" icon="el-icon-search" size="small" @click="initRoleList">
             搜索
           </el-button>
         </el-col>
