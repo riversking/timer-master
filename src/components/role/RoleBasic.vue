@@ -21,38 +21,44 @@
             border
             stripe
             size="medium"
+            style="width: 100%;"
           >
             <af-table-column
               prop="id"
               label="#"
               align="center"
+              width="75px"
             >
             </af-table-column>
             <af-table-column
               prop="roleName"
               label="角色名称"
               align="center"
+              width="264px"
             >
             </af-table-column>
             <af-table-column
               prop="roleCode"
               label="角色编号"
               align="center"
+              width="314px"
             >
             </af-table-column>
             <af-table-column
               prop="roleDesc"
               label="角色描述"
               align="center"
+              width="196px"
             >
             </af-table-column>
             <af-table-column
               prop="createTime"
               label="创建时间"
               align="center"
+              width="416px"
             >
             </af-table-column>
-            <af-table-column align="center" width="372px" label="操作">
+            <af-table-column align="center" label="操作">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -114,12 +120,26 @@
         title="添加权限"
         :visible.sync="permissionVisible"
         :destroy-on-close="true"
+        @close="closePermissionDialog"
         width="80%">
+        <el-input
+          placeholder="输入关键字进行过滤"
+          v-model="filterText">
+        </el-input>
         <el-tree
           :data="menuList"
+          node-key="id"
+          ref="tree"
+          :default-checked-keys="defaultList"
+          :filter-node-method="filterNode"
+          default-expand-all
           show-checkbox
         >
         </el-tree>
+        <div slot="footer" class="dialog-footer" v-if="!detail">
+          <el-button @click="permissionVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addMenu">确 定</el-button>
+        </div>
       </el-dialog>
     </el-card>
   </div>
@@ -147,7 +167,11 @@
         detail: false,
         roleName: '',
         title: '',
-        menuList: ''
+        menuList: [],
+        defaultList: [],
+        roleId: '',
+        menuIds: [],
+        filterText: ''
       }
     },
     mounted() {
@@ -167,6 +191,8 @@
             this.roleList = resp.data.records;
             this.total = resp.data.total;
             this.loading = false;
+          } else {
+            this.$message.warning(resp.message);
           }
         });
       },
@@ -198,6 +224,8 @@
           if (resp.code === '0') {
             this.dialogVisible = false
             this.initRoleList()
+          } else {
+            this.$message.warning(resp.message);
           }
         });
       },
@@ -222,6 +250,7 @@
       },
       handlePermission(index, row) {
         this.permissionVisible = true
+        this.roleId = row.id
         this.getMenuByRoleId(row.id)
       },
       editRole() {
@@ -236,6 +265,8 @@
             if (res.retCode === 0) {
               this.dialogVisible = false;
               this.initRoleList()
+            } else {
+              this.$message.warning(res.retMsg);
             }
           })
       },
@@ -243,9 +274,38 @@
         this.$store.dispatch('getMenuByRoleId', {"param": id})
           .then(res => {
             if (res.code === '0') {
-              this.menuList = res.data
+              this.menuList = res.data.list
+              this.defaultList = res.data.checkedMenu
+            } else {
+              this.$message.warning(res.message);
             }
           })
+      },
+      closePermissionDialog() {
+        this.defaultList = []
+      },
+      addMenu() {
+        let obj = {
+          roleId: this.roleId,
+          menuIds: this.$refs.tree.getCheckedKeys()
+        }
+        this.$store.dispatch('updateByRoleId', {"param": obj})
+          .then(res => {
+            if (res.code === '0') {
+              this.permissionVisible = false;
+            } else {
+              this.$message.warning(res.message);
+            }
+          })
+      },
+      filterNode(value, data) {
+        if (!value) return true;
+        return data.label.indexOf(value) !== -1;
+      }
+    },
+    watch: {
+      filterText(val) {
+        this.$refs.tree.filter(val);
       }
     }
   }

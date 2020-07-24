@@ -89,6 +89,16 @@ export default {
       } catch (error) {
         console.log('error: ', error)
       }
+    },
+    async updateByRoleId({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/updateByRoleId`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
     }
   },
   mutations: {}

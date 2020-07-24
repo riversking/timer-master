@@ -18,8 +18,9 @@
             :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
             <af-table-column
               prop="id"
-              label="编号"
+              label="#"
               align="center"
+              width="75px"
               >
             </af-table-column>
             <af-table-column
@@ -72,7 +73,7 @@
               align="center"
               >
             </af-table-column>
-            <af-table-column align="center" label="操作">
+            <af-table-column align="center" label="操作" width="327px">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -307,3 +308,6 @@
     }
   };
 </script>
+<style scoped>
+
+</style>
