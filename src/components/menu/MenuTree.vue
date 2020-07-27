@@ -20,7 +20,7 @@
               prop="id"
               label="#"
               align="center"
-              width="75px"
+              width="85px"
               >
             </af-table-column>
             <af-table-column
@@ -93,67 +93,62 @@
         </el-col>
       </el-row>
       <el-dialog
-        title="title"
+        title="添加菜单"
         :visible.sync="dialogVisible"
         :destroy-on-close="true"
         @close="closeDialog"
-        width="80%">
+        width="50%">
         <div>
-          <el-form :model="menuForm" :disabled="detail" ref="menuForm" label-position="left" label-width="80px"
-                   style="margin-left: 50px;">
-            <el-row>
-              <el-col :span="12">
+          <el-form :model="menuForm" :disabled="detail" ref="menuForm" label-position="left" label-width="80px">
+            <el-row style="text-align: left">
+              <el-col :span="24">
                 <el-form-item label="名称:" prop="name">
                   <el-input size="medium" v-model="menuForm.name" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入名称"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="类型:" prop="type">
-                  <el-radio v-model="menuForm.type" :label=0 border>菜单</el-radio>
-                  <el-radio v-model="menuForm.type" :label=1 border>按钮</el-radio>
+              <el-col :span="24">
+              <el-form-item label="类型:" prop="type">
+                <el-radio-group v-model="menuForm.type" size="medium" >
+                  <el-radio :label=0 border>菜单</el-radio>
+                  <el-radio :label=1 border>按钮</el-radio>
+                </el-radio-group>
                 </el-form-item>
               </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
+              <el-col :span="24">
                 <el-form-item label="路径:" prop="path">
                   <el-input size="medium" v-model="menuForm.path" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入路径"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
-                <el-form-item label="上级菜单:" prop="path">
+              <el-col :span="24">
+                <el-form-item label="上级菜单:" prop="parentMenu">
                   <wlTreeSelect
                     width="240"
                     :data="menuTree"
                     @change="handleChanged"
-                    v-model="parentMenu"
+                    v-model="menuForm.parentId"
                   ></wlTreeSelect>
                 </el-form-item>
               </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
+              <el-col :span="24">
                 <el-form-item label="图标:" prop="icon">
-                  <icon-picker v-model="menuForm.icon" style="width: 369.75px;height: 1px"></icon-picker>
+                  <icon-picker v-model="menuForm.icon" style="width: 80%"></icon-picker>
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="24">
                 <el-form-item label="排序:" prop="sort">
                   <el-input-number v-model="menuForm.sort" controls-position="right" :min="1"
                                    :max="100"></el-input-number>
                 </el-form-item>
               </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12" v-if="menuForm.type === 0">
+              <el-col :span="24" v-if="menuForm.type === 0">
                 <el-form-item label="控件:" prop="component">
                   <el-input size="medium" v-model="menuForm.component" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入控件"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="12" v-if="menuForm.type === 1 ">
+              <el-col :span="24" v-if="menuForm.type === 1 ">
                 <el-form-item label="权限标识:" prop="permission">
                   <el-input size="medium" v-model="menuForm.permission" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入权限标识"></el-input>

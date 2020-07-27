@@ -3,13 +3,12 @@
     <el-card class="box-card" style="margin-top: 10px">
       <el-row>
         <el-col :span="12" style="text-align: left">
-          <el-input placeholder="请输入内容" v-model="roleName" style="width: 200px" size="small" clearable></el-input>
+          <el-input placeholder="请输入角色名称" v-model="roleName" style="width: 200px" size="small" clearable></el-input>
           <el-button type="primary" icon="el-icon-search" size="small" @click="initRoleList">
             搜索
           </el-button>
         </el-col>
         <el-col :span="12" style="text-align: right">
-
           <el-button type="primary" icon="el-icon-plus" size="small" @click="showDialog">
             添加角色
           </el-button>
@@ -21,7 +20,6 @@
             border
             stripe
             size="medium"
-            style="width: 100%;"
           >
             <af-table-column
               prop="id"
@@ -34,31 +32,27 @@
               prop="roleName"
               label="角色名称"
               align="center"
-              width="264px"
             >
             </af-table-column>
             <af-table-column
               prop="roleCode"
               label="角色编号"
               align="center"
-              width="314px"
             >
             </af-table-column>
             <af-table-column
               prop="roleDesc"
               label="角色描述"
               align="center"
-              width="196px"
             >
             </af-table-column>
             <af-table-column
               prop="createTime"
               label="创建时间"
               align="center"
-              width="416px"
             >
             </af-table-column>
-            <af-table-column align="center" label="操作">
+            <af-table-column align="center" label="操作" width="402px">
               <template slot-scope="scope">
                 <el-button
                   size="mini"
