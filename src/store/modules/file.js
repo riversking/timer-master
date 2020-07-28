@@ -1,6 +1,6 @@
 import {getData, postData} from "../../libs/fetchData";
 
-const namespace = 'api/v1/file'
+const namespace = 'api/file'
 
 export default {
   state: {

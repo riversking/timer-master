@@ -2,7 +2,7 @@ import {getData, postData} from '../../libs/fetchData'
 import {setToken} from '../../utils/util'
 
 
-const namespace = 'api/v1/user'
+const namespace = 'api/user'
 
 export default {
   state: {

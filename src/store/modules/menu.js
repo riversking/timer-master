@@ -1,6 +1,6 @@
 import {postData} from '../../libs/fetchData'
 
-const namespace = 'api/v1/user/menu';
+const namespace = 'api/user/menu';
 
 export default {
   state: {

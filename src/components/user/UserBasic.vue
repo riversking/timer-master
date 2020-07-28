@@ -391,6 +391,8 @@
             this.userList = resp.data.records;
             this.total = resp.data.total;
             this.loading = false;
+          } else {
+            this.$message.warning(resp.message);
           }
         });
       },
@@ -417,6 +419,8 @@
         this.$store.dispatch('roleList').then(resp => {
           if (resp.code === '0') {
             this.roles = resp.data
+          } else {
+            this.$message.warning(resp.message);
           }
         });
       },
@@ -436,6 +440,8 @@
           if (resp.code === '0') {
             this.dialogVisible = false
             this.initUserList()
+          } else {
+            this.$message.warning(resp.message);
           }
         });
       },
@@ -509,6 +515,8 @@
             if (res.code === '0') {
               this.dialogVisible = false;
               this.initUserList()
+            } else {
+              this.$message.warning(res.message);
             }
           })
       },
@@ -535,6 +543,8 @@
             if (res.code === '0') {
               this.roleVisible = false;
               this.initUserList()
+            } else {
+              this.$message.warning(res.message);
             }
           })
       },
@@ -548,7 +558,7 @@
         let excelName = "用户列表.xlsx"
         axios({
           method: 'GET',
-          url: 'api/v1/file/exportUser',
+          url: 'api/file/exportUser',
           // params: params,
           headers: {
             "Authorization": 'Bearer ' + getToken()
