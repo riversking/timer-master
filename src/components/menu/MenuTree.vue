@@ -21,13 +21,13 @@
               label="#"
               align="center"
               width="85px"
-              >
+            >
             </af-table-column>
             <af-table-column
               prop="name"
               label="名称"
               align="center"
-              >
+            >
               <template slot-scope="scope">
                 <el-button
                   size="mini"
@@ -41,20 +41,20 @@
               prop="path"
               label="路由路径"
               align="center"
-             >
+            >
             </af-table-column>
             <af-table-column
               prop="type"
               label="类型"
               align="center"
               :formatter="typeFormatter"
-              >
+            >
             </af-table-column>
             <af-table-column
               prop="icon"
               label="图标"
               align="center"
-              >
+            >
               <template slot-scope="scope">
                 <div slot="reference" class="tag-group">
                   <i :class="scope.row.icon"></i>
@@ -65,13 +65,13 @@
               prop="code"
               label="权限标识"
               align="center"
-              >
+            >
             </af-table-column>
             <af-table-column
               prop="sort"
               label="排序"
               align="center"
-              >
+            >
             </af-table-column>
             <af-table-column align="center" label="操作" width="327px">
               <template slot-scope="scope">
@@ -108,11 +108,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-              <el-form-item label="类型:" prop="type">
-                <el-radio-group v-model="menuForm.type" size="medium" >
-                  <el-radio :label=0 border>菜单</el-radio>
-                  <el-radio :label=1 border>按钮</el-radio>
-                </el-radio-group>
+                <el-form-item label="类型:" prop="type">
+                  <el-radio-group v-model="menuForm.type" size="medium">
+                    <el-radio :label=0 border>菜单</el-radio>
+                    <el-radio :label=1 border>按钮</el-radio>
+                  </el-radio-group>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
@@ -293,9 +293,28 @@
         this.getMenuById(row.id);
       },
       handleDelete(index, row) {
-        this.$store.dispatch('deleteMenu', {'param': row.id}).then(res => {
-          this.getMenuTree()
-        })
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$store.dispatch('deleteMenu', {'param': row.id})
+            .then(res => {
+              if (res.code === 0) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
+                this.getMenuTree()
+
+              }
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
       handleChanged(val) {
         this.menuForm.parentId = val[0].id

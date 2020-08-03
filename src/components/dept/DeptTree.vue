@@ -5,7 +5,7 @@
         <el-col :span="24" style="text-align: left">
           <el-button-group>
             <el-button type="primary" icon="el-icon-plus" size="small" @click="handleAdd">新增</el-button>
-            <el-button type="primary" icon="el-icon-edit" size="small">编辑</el-button>
+            <el-button type="primary" icon="el-icon-edit" size="small" @click="handleEdit">编辑</el-button>
             <el-button type="primary" icon="el-icon-delete" size="small" @click="handleDelete">删除</el-button>
           </el-button-group>
         </el-col>
@@ -27,8 +27,8 @@
                                :max="100"></el-input-number>
             </el-form-item>
             <el-button @click="cancel">取 消</el-button>
-            <el-button type="primary" v-if="edit" @click="addDept">确 定</el-button>
-            <el-button type="primary" v-if="!edit" @click="editDept">编 辑</el-button>
+            <el-button type="primary" v-if="!edit" @click="addDept">确 定</el-button>
+            <el-button type="primary" v-if="edit" @click="editDept">编 辑</el-button>
           </el-form>
         </el-col>
       </el-row>
@@ -84,9 +84,14 @@
       },
       handleAdd() {
         this.disable = false;
+        this.edit = false;
         this.deptForm.parentId = this.deptForm.id
         this.deptForm.name = ''
         this.deptForm.orderNum = ''
+      },
+      handleEdit() {
+        this.disable = false;
+        this.edit = true;
       },
       addDept() {
         let obj = {
@@ -122,18 +127,33 @@
           })
       },
       handleDelete() {
-        let obj = {
-          id: this.deptForm.id
-        }
-        this.$store.dispatch('deleteDept', obj)
-          .then(res => {
-            if (res.retCode === 0) {
-              this.initDept();
-              this.getDeptList();
-            } else {
-              this.$message.warning(res.retMsg);
-            }
-          })
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let obj = {
+            id: this.deptForm.id
+          }
+          this.$store.dispatch('deleteDept', obj)
+            .then(res => {
+              if (res.retCode === 0) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
+                this.initDept();
+                this.getDeptList();
+              } else {
+                this.$message.warning(res.retMsg);
+              }
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
       cancel() {
         this.disable = true;

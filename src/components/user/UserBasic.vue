@@ -150,7 +150,7 @@
                 size="mini"
                 type="success"
                 icon="el-icon-plus"
-                @click="handleAddRole(scope.$index, scope.row)">添加角色
+                @click="handleChangePwd(scope.$index, scope.row)">修改密码
               </el-button>
               <el-button
                 size="mini"
@@ -234,7 +234,7 @@
                   <el-upload
                     v-if="detail === false"
                     class="upload-demo"
-                    action="api/v1/file/upload"
+                    action="api/file/upload"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
                     :on-success="handleSuccess"
@@ -274,7 +274,7 @@
       </el-dialog>
       <el-dialog
         title="添加角色"
-        :visible.sync="roleVisible"
+        :visible.sync="pwdVisible"
         :destroy-on-close="true"
       >
         <el-row>
@@ -292,7 +292,7 @@
           </el-form>
         </el-row>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="roleVisible = false">取 消</el-button>
+          <el-button @click="pwdVisible = false">取 消</el-button>
           <el-button type="primary" @click="addRoleByUserId">确 定</el-button>
         </div>
       </el-dialog>
@@ -308,7 +308,7 @@
           <el-col :span="12" style="text-align: left;margin-left: 5px">
             <el-upload
               class="upload-demo"
-              action="api/v1/file/upload"
+              action="api/file/upload"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
               :on-success="handleSuccess"
@@ -341,7 +341,7 @@
         phone: '',
         searchDate: '',
         dialogVisible: false,
-        roleVisible: false,
+        pwdVisible: false,
         userForm: {
           id: '',
           username: '',
@@ -451,10 +451,9 @@
         this.title = '编辑用户';
         this.getUser(row.id);
       },
-      handleAddRole(index, row) {
-        this.roleVisible = true
+      handleChangePwd(index, row) {
+        this.pwdVisible = true
         this.userId = row.id
-
       },
       handleDisable(index, row) {
         let obj = {
@@ -466,9 +465,27 @@
         })
       },
       handleDelete(index, row) {
-        this.$store.dispatch('deleteUser', {'param': row.id}).then(res => {
-          this.initUserList()
-        })
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$store.dispatch('deleteUser', {'param': row.id})
+            .then(res => {
+              if (res.code === '0') {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!'
+                });
+                this.initUserList()
+              }
+            })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
       currentChange(currentPage) {
         this.page = currentPage;
@@ -503,6 +520,8 @@
       editUser() {
         let obj = {
           'id': this.userForm.id,
+          'userId': this.userForm.userId,
+          'phone': this.userForm.phone,
           'username': this.userForm.username,
           'avatar': this.file,
           'updateUser': this.$store.state.userInfo.username,
@@ -541,7 +560,7 @@
         this.$store.dispatch('addRoleByUserId', {'param': obj})
           .then(res => {
             if (res.code === '0') {
-              this.roleVisible = false;
+              this.pwdVisible = false;
               this.initUserList()
             } else {
               this.$message.warning(res.message);
