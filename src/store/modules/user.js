@@ -97,6 +97,16 @@ export default {
       } catch (error) {
         console.log('error: ', error)
       }
+    },
+    async importUserByExcel({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/importUserExcel`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
     }
 
   }

@@ -201,7 +201,7 @@
                             placeholder="请输入密码" show-password></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="24">
+              <el-col :span="24" v-if="edit === false">
                 <el-form-item label="工号:" prop="userId">
                   <el-input size="medium" v-model="userForm.userId" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入工号"></el-input>
@@ -237,7 +237,7 @@
                     action="api/file/upload"
                     :on-preview="handlePreview"
                     :on-remove="handleRemove"
-                    :on-success="handleSuccess"
+                    :on-success="imgSuccess"
                     ref="upload"
                     :file-list="fileList"
                     list-type="picture"
@@ -409,8 +409,19 @@
         console.log(file);
       },
       handleSuccess(fileList) {
-        this.file = fileList.rsp.filename
-        console.log('fileList', fileList)
+        let obj = {
+          "param": fileList.data.filepath + fileList.data.filename
+        }
+        this.$store.dispatch('importUserByExcel', obj).then(resp => {
+          if (resp.code === '0') {
+            this.dialogUpload = false
+          } else {
+            this.$message.warning(resp.message);
+          }
+        });
+      },
+      imgSuccess(fileList) {
+        this.file = fileList.data.filename
       },
       handleExceed(files, fileList) {
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
@@ -428,15 +439,12 @@
         let obj = {
           'username': this.userForm.username,
           'password': this.userForm.password,
-          'userId': this.userForm.userId,
           'phone': this.userForm.phone,
           'avatar': this.file,
           'createUser': this.$store.state.userInfo.username,
           'roleIds': this.userForm.roleIds
         };
-        this.$store.dispatch("addUser", {
-          'param': obj
-        }).then(resp => {
+        this.$store.dispatch("addUser", obj).then(resp => {
           if (resp.code === '0') {
             this.dialogVisible = false
             this.initUserList()
@@ -489,12 +497,10 @@
       },
       currentChange(currentPage) {
         this.page = currentPage;
-        this.dialogVisible = true;
         this.initUserList();
       },
       sizeChange(currentSize) {
         this.size = currentSize;
-        this.dialogVisible = true;
         this.initUserList();
       },
       statusFormatter(row, column) {
