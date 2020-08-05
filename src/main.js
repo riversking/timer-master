@@ -9,6 +9,7 @@ import wl from "wl-vue-select";
 import "wl-vue-select/lib/wl-vue-select.css"
 import AFTableColumn from 'af-table-column'
 import ExTableColumn from 'ex-table-column';
+import md5 from 'js-md5';
 import {getRequest} from "./utils/api";
 import {postRequest} from "./utils/api";
 import {putRequest} from "./utils/api";
@@ -36,7 +37,7 @@ Vue.prototype.getRequest = getRequest;
 Vue.prototype.postRequest = postRequest;
 Vue.prototype.putRequest = putRequest;
 Vue.prototype.deleteRequest = deleteRequest;
-
+Vue.prototype.$md5 = md5;
 
 router.beforeEach((to, from, next) => {
   if (to.path === '/login') {

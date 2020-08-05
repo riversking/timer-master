@@ -19,6 +19,7 @@
   </el-form>
 </template>
 <script>
+  import {Encrypt} from '../utils/AESUtils'
   export default {
     data() {
       return {
@@ -41,7 +42,7 @@
         this.$store.dispatch('userLogin', {
           'param': {
             'username': this.loginForm.username,
-            'password': this.loginForm.password
+            'password': Encrypt(this.loginForm.password).toString()
           }
         }).then(resp => {
           _this.loading = false;
