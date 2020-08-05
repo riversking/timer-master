@@ -201,9 +201,9 @@
                             placeholder="请输入密码" show-password></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="edit === false">
+              <el-col :span="24" v-if="edit || detail">
                 <el-form-item label="工号:" prop="userId">
-                  <el-input size="medium" v-model="userForm.userId" style="width: 80%" prefix-icon="el-icon-edit"
+                  <el-input size="medium" v-model="userForm.userId" style="width: 80%" disabled="true" prefix-icon="el-icon-edit"
                             placeholder="请输入工号"></el-input>
                 </el-form-item>
               </el-col>
