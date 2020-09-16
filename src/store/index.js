@@ -5,16 +5,19 @@ import menu from './modules/menu'
 import role from './modules/role'
 import file from './modules/file'
 import dept from './modules/dept'
+import tags from './modules/tags'
 import {instance} from '../libs/fetchData'
 import {getToken} from '../utils/util'
 import router from '../router';
+import getters from './getters'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     userInfo: JSON.parse(window.localStorage.getItem('user')),
-    routes: []
+    routes: [],
+    tagsView: []
   },
   mutations: {
     initMenu(state, menus) {
@@ -32,8 +35,10 @@ const store = new Vuex.Store({
     menu,
     role,
     file,
-    dept
-  }
+    dept,
+    tags
+  },
+  getters
 });
 
 instance.interceptors.request.use(config => {
@@ -59,4 +64,5 @@ instance.interceptors.response.use(response => {
   }
   return Promise.reject();
 })
+
 export default store

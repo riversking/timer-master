@@ -16,7 +16,7 @@
           <el-form ref="deptForm" :model="deptForm" prop="deptForm" label-width="80px" :disabled="disable">
             <el-form-item label="上级部门:" prop="parentId">
               <el-select v-model="deptForm.parentId" placeholder="请选择上级部门">
-                <el-option v-for="item in deptList" :label="item.name" :value="item.id"></el-option>
+                <el-option v-for="item in deptList" :label="item.name" :value="item.id" :key="item.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="部门名称:" prop="name">
