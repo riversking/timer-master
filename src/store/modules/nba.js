@@ -1,6 +1,6 @@
 import {postData, getData} from '../../libs/fetchData'
 
-const namespace = 'api/nba/';
+const namespace = 'api/nba';
 
 export default {
   state: {
@@ -13,6 +13,26 @@ export default {
     async getPlayerList({commit}, obj) {
       try {
         let res = await postData(`${namespace}/player/playerList`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async syncPlayer({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/player/syncPlayer`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async getTeamList({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/team/getTeamList`, obj).catch(err => {
           commit('GLOBAL_ERR', err, {root: true})
         });
         return res.data

@@ -412,6 +412,7 @@
     },
     methods: {
       initUserList() {
+        this.loading = true;
         let query = {
           page: this.page,
           pageSize: this.size,

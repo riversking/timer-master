@@ -4,12 +4,20 @@
       <el-row>
         <el-col :span="12" style="text-align: left">
           <el-input placeholder="请输入球员名称" v-model="playerName" style="width: 200px" size="small" clearable></el-input>
+          <el-select v-model="teamId" placeholder="请选择球队" size="small">
+            <el-option
+              v-for="item in teamList"
+              :key="item.teamId"
+              :label="item.name"
+              :value="item.teamId">
+            </el-option>
+          </el-select>
           <el-button type="primary" icon="el-icon-search" size="small" @click="initPlayerList">
             搜索
           </el-button>
         </el-col>
         <el-col :span="12" style="text-align: right">
-          <el-button type="primary" icon="el-icon-refresh" size="small" @click="showDialog">
+          <el-button type="primary" icon="el-icon-refresh" size="small" @click="syncPlayer">
             同步球员
           </el-button>
         </el-col>
@@ -75,6 +83,15 @@
             >
             </af-table-column>
           </el-table>
+          <div style="display: flex;justify-content: flex-end;margin-top: 8px">
+            <el-pagination
+              background
+              @current-change="currentChange"
+              @size-change="sizeChange"
+              layout="sizes, prev, pager, next, jumper, ->, total, slot"
+              :total="total">
+            </el-pagination>
+          </div>
         </el-col>
       </el-row>
     </el-card>
@@ -89,18 +106,29 @@ export default {
       playerList: [],
       loading: true,
       pageNum: 1,
-      pageSize: 10
+      pageSize: 10,
+      total: 0,
+      teamList: [],
+      teamId: ''
     }
   },
   mounted() {
-    this.initPlayerList()
+    this.initPlayerList();
+    this.getTeamList()
   },
   methods: {
-    showDialog() {
-
+    syncPlayer() {
+      this.$store.dispatch('syncPlayer').then(resp => {
+        if (resp.code !== '0') {
+          this.$message.warning(resp.message);
+        }
+      });
     },
     initPlayerList() {
+      this.loading = true
       let query = {
+        playerName: this.playerName,
+        teamId: this.teamId,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
       }
@@ -113,7 +141,24 @@ export default {
           this.$message.warning(resp.message);
         }
       });
-    }
+    },
+    currentChange(currentPage) {
+      this.pageNum = currentPage;
+      this.initPlayerList();
+    },
+    sizeChange(currentSize) {
+      this.pageSize = currentSize;
+      this.initPlayerList();
+    },
+    getTeamList() {
+      this.$store.dispatch('getTeamList').then(resp => {
+        if (resp.code === '0') {
+          this.teamList = resp.data;
+        } else {
+          this.$message.warning(resp.message);
+        }
+      });
+    },
   }
 }
 </script>

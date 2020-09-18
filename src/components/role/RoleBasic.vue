@@ -173,6 +173,7 @@
     },
     methods: {
       initRoleList() {
+        this.loading = true;
         let query = {
           roleName: this.roleName,
           page: this.page,

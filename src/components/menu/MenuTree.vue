@@ -200,6 +200,7 @@
     },
     methods: {
       getMenuTree() {
+        this.loading = true;
         this.$store.dispatch('getMenu')
           .then(res => {
             this.menuTree = res.data;
