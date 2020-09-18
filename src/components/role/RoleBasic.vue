@@ -202,6 +202,7 @@
         this.dialogVisible = true;
         this.edit = false;
         this.title = "添加角色"
+        this.roleForm = {}
       },
       closeDialog() {
         this.dialogVisible = false;

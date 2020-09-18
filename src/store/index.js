@@ -6,6 +6,7 @@ import role from './modules/role'
 import file from './modules/file'
 import dept from './modules/dept'
 import tags from './modules/tags'
+import nba from './modules/nba'
 import {instance} from '../libs/fetchData'
 import {getToken} from '../utils/util'
 import router from '../router';
@@ -36,7 +37,8 @@ const store = new Vuex.Store({
     role,
     file,
     dept,
-    tags
+    tags,
+    nba
   },
   getters
 });

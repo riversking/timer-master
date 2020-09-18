@@ -230,7 +230,7 @@ export default {
       isDot: false,
       isRouterAlive: true,
       activerouter: '',
-      editableTabsValue: '2',
+      editableTabsValue: '/home',
       editableTabs: [],
       tabIndex: 2,
       TabsValue: "",

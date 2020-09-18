@@ -229,6 +229,7 @@
       showDialog() {
         this.dialogVisible = true;
         this.edit = true;
+        this.menuForm = {}
       },
       addMenu() {
         let obj = {
