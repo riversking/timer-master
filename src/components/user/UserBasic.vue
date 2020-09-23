@@ -120,7 +120,7 @@
           >
             <template slot-scope="scope">
               <div slot="reference" class="tag-group">
-                <el-tag v-for="item in scope.row.sysRoleModels" :key="item.id" style="margin-right: 5px">{{
+                <el-tag v-for="(item,index) in scope.row.sysRoleModels" :key="index" style="margin-right: 5px">{{
                   item.roleName
                   }}
                 </el-tag>

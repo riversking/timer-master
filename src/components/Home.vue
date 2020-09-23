@@ -122,8 +122,12 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          _this.getRequest("/logout");
+          // _this.getRequest("/logout");
           _this.$store.commit('logout');
+          window.localStorage.removeItem("user");
+          window.localStorage.removeItem("menu");
+          sessionStorage.removeItem("tabView");
+          sessionStorage.removeItem("tabViews");
           _this.$router.replace({path: '/'});
         }).catch(() => {
           _this.$message({
@@ -133,7 +137,7 @@ export default {
         });
       }
     },
-    handleselect: function (a, b) {
+    handleSelect: function (a, b) {
       this.reload()  // 点击侧边栏重新载入页面
     },
     reload() {
@@ -196,6 +200,7 @@ export default {
       let oldView = sessionStorage.getItem("tabView") || '';
       if (oldView !== '') {
         this.editableTabsValue = oldView
+        this.$router.push({path: oldView});
       }
     },
     removeTab(targetName) {

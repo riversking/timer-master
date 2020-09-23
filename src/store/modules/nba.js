@@ -40,6 +40,26 @@ export default {
         console.log('error: ', error)
       }
     },
+    async getTeamPage({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/team/getTeamPage`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
+    async getPlayerDetail({commit}, obj) {
+      try {
+        let res = await postData(`${namespace}/player/getPlayerDetail`, obj).catch(err => {
+          commit('GLOBAL_ERR', err, {root: true})
+        });
+        return res.data
+      } catch (error) {
+        console.log('error: ', error)
+      }
+    },
   },
   mutations: {}
 }

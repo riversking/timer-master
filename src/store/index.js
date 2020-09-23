@@ -23,7 +23,6 @@ const store = new Vuex.Store({
   mutations: {
     initMenu(state, menus) {
       state.routes = menus
-      console.log('state.routes', state.routes)
       window.localStorage.setItem('menu', JSON.stringify(menus));
     },
     login(state, user) {
