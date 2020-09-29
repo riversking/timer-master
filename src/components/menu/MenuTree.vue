@@ -302,13 +302,12 @@
         }).then(() => {
           this.$store.dispatch('deleteMenu', {'param': row.id})
             .then(res => {
-              if (res.code === 0) {
+              if (res.code === '0') {
                 this.$message({
                   type: 'success',
                   message: '删除成功!'
                 });
                 this.getMenuTree()
-
               }
             })
         }).catch(() => {

@@ -220,7 +220,7 @@
                             placeholder="请输入邮箱"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="!edit">
+              <el-col :span="24">
                 <el-form-item label="姓名:" prop="nickname">
                   <el-input size="medium" v-model="userForm.nickname" style="width: 80%" prefix-icon="el-icon-edit"
                             placeholder="请输入姓名"></el-input>

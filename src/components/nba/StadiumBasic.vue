@@ -3,33 +3,27 @@
     <el-card class="box-card" style="margin-top: 10px">
       <el-row>
         <el-col :span="12" style="text-align: left">
-          <el-input placeholder="请输入球队名称" v-model="teamName" style="width: 200px" size="small" clearable></el-input>
-          <el-button type="primary" icon="el-icon-search" size="small" @click="initTeamList">
+          <el-input placeholder="请输入球馆名称" v-model="stadiumName" style="width: 200px" size="small" clearable></el-input>
+          <el-button type="primary" icon="el-icon-search" size="small" @click="initStadiumList">
             搜索
           </el-button>
         </el-col>
         <el-col :span="24" style="margin-top: 10px">
           <el-table
-            :data="teamList"
+            :data="stadiumList"
             v-loading="this.loading"
             border
             stripe
             size="medium">
             <af-table-column
-              prop="teamId"
+              prop="stadiumId"
               label="#"
               align="center"
             >
             </af-table-column>
             <af-table-column
               prop="name"
-              label="球队名称"
-              align="center"
-            >
-            </af-table-column>
-            <af-table-column
-              prop="stadiumName"
-              label="球馆"
+              label="球馆名称"
               align="center"
             >
             </af-table-column>
@@ -40,14 +34,26 @@
             >
             </af-table-column>
             <af-table-column
-              prop="division"
-              label="所在区域"
+              prop="country"
+              label="国家"
               align="center"
             >
             </af-table-column>
             <af-table-column
-              prop="conference"
-              label="所在战区"
+              prop="address"
+              label="地址"
+              align="center"
+            >
+            </af-table-column>
+            <af-table-column
+              prop="capacity"
+              label="容纳人数"
+              align="center"
+            >
+            </af-table-column>
+            <af-table-column
+              prop="zip"
+              label="邮编"
               align="center"
             >
             </af-table-column>
@@ -68,31 +74,31 @@
 </template>
 <script>
 export default {
-  name: 'team',
+  name: 'stadium',
   data() {
     return {
-      teamList: [],
+      stadiumList: [],
       loading: true,
       pageNum: 1,
       pageSize: 10,
       total: 0,
-      teamName: ''
+      stadiumName: ''
     }
   },
   mounted() {
-    this.initTeamList()
+    this.initStadiumList()
   },
   methods: {
-    initTeamList() {
+    initStadiumList() {
       this.loading = true
       let query = {
-        name: this.teamName,
+        name: this.stadiumName,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
       }
-      this.$store.dispatch('getTeamPage', query).then(resp => {
+      this.$store.dispatch('getStadiumPage', query).then(resp => {
         if (resp.code === '0') {
-          this.teamList = resp.data.records;
+          this.stadiumList = resp.data.records;
           this.total = resp.data.total;
           this.loading = false;
         } else {
@@ -102,11 +108,11 @@ export default {
     },
     currentChange(currentPage) {
       this.pageNum = currentPage;
-      this.initTeamList();
+      this.initStadiumList();
     },
     sizeChange(currentSize) {
       this.pageSize = currentSize;
-      this.initTeamList();
+      this.initStadiumList();
     },
   }
 }
