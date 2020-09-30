@@ -19,7 +19,16 @@
               prop="teamId"
               label="#"
               align="center"
+              width="192px"
             >
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type="text"
+                  @click="showDetail(scope.$index, scope.row)"
+                >{{ scope.row.teamId }}
+                </el-button>
+              </template>
             </af-table-column>
             <af-table-column
               prop="name"
@@ -63,6 +72,59 @@
           </div>
         </el-col>
       </el-row>
+      <el-dialog
+        title="球队详情"
+        :visible.sync="dialogVisible"
+        :destroy-on-close="true"
+        @close="closeDialog"
+        width="80%">
+        <div>
+          <el-form :model="team" ref="team" :disabled="true" label-position="right" label-width="80px"
+                   style="margin-left: 50px;">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="头像:" prop="photoUrl">
+                  <div class="block">
+                    <el-avatar :size="50" :src="team.logoUrl"></el-avatar>
+                  </div>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="球队名称:" prop="teamName">
+                  <el-input size="medium" v-model="team.teamName" style="width: 80%"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="城市:" prop="city">
+                  <el-input size="medium" v-model="team.city" style="width: 80%"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="所在区域:" prop="division">
+                  <el-input size="medium" v-model="team.division" style="width: 80%"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="24">
+                <el-form-item label="所在战区:" prop="conference">
+                  <el-input size="medium" v-model="team.conference" style="width: 80%"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-form-item label="球馆名称:" prop="stadiumId" style="text-align: left">
+                <el-select v-model="team.stadiumId" placeholder="请选择球队" size="small" style="margin-left: 110px">
+                  <el-option
+                    v-for="item in stadiumList"
+                    :key="item.stadiumId"
+                    :label="item.name"
+                    :value="item.stadiumId">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-row>
+          </el-form>
+        </div>
+      </el-dialog>
     </el-card>
   </div>
 </template>
@@ -76,11 +138,16 @@ export default {
       pageNum: 1,
       pageSize: 10,
       total: 0,
-      teamName: ''
+      teamName: '',
+      team: {},
+      dialogVisible: false,
+      stadiumId: '',
+      stadiumList: ''
     }
   },
   mounted() {
     this.initTeamList()
+    this.getStadiumList()
   },
   methods: {
     initTeamList() {
@@ -107,6 +174,35 @@ export default {
     sizeChange(currentSize) {
       this.pageSize = currentSize;
       this.initTeamList();
+    },
+    showDetail(index, row) {
+      this.getTeam(row.teamId);
+    },
+    getTeam(teamId) {
+      let query = {
+        teamId: teamId || 0,
+      }
+      this.$store.dispatch('getTeamDetail', query).then(resp => {
+        if (resp.retCode === 0) {
+          this.team = resp.team;
+          this.dialogVisible = true
+        } else {
+          this.$message.warning(resp.retMsg);
+        }
+      });
+    },
+    getStadiumList() {
+      this.$store.dispatch('stadiumList').then(resp => {
+        if (resp.code === '0') {
+          this.stadiumList = resp.data;
+        } else {
+          this.$message.warning(resp.message);
+        }
+      });
+    },
+    closeDialog() {
+      this.dialogVisible = false
+      this.team = {}
     },
   }
 }

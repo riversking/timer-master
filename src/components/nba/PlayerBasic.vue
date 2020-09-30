@@ -112,7 +112,7 @@
         @close="closeDialog"
         width="80%">
         <div>
-          <el-form :model="player" ref="player" disabled="true" label-position="right" label-width="80px"
+          <el-form :model="player" ref="player" :disabled="true" label-position="right" label-width="80px"
                    style="margin-left: 50px;">
             <el-row>
               <el-col :span="12">
