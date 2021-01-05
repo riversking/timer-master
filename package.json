@@ -12,7 +12,7 @@
   "dependencies": {
     "af-table-column": "^1.0.3",
     "ajv": "^6.9.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "el-select-tree": "^1.0.14",
     "element-ui": "^2.13.2",
     "ex-table-column": "^1.0.7",
